@@ -188,6 +188,9 @@ End:
 ### Day 3 Sample
 ![SPC-sample-day3](https://github.com/ktrue/SPC-placefile/assets/17507343/75b807e1-801a-499c-afdb-fd1ed1b1373b)
 
+### Sample with all risks displayed
+![SPC-sample-test](https://github.com/ktrue/SPC-placefile/assets/17507343/5e781238-6d5f-488e-8ade-ec309a2b0727)
+
 ## Acknowledgements
 
 Special thanks to Mike Davis, W1ARN of the National Weather Service, Nashville TN office
