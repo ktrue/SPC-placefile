@@ -1,8 +1,8 @@
 # SPC-placefile
-## GRLevelX placefile generator for SPC risk hazards from www.spc.noaa.gov
+## GRLevelX placefile generator for risk hazards from [NOAA-NWS Storm Prediction Center](https://www.spc.noaa.gov/)
 ## Purpose:
 
-This script set gets JSON outlook data from the (SPC GIS Convective Outlooks)[https://www.spc.noaa.gov/gis/] and formats a placefile for GRLevelX software
+This script set gets JSON outlook data from the [SPC GIS Convective Outlooks](https://www.spc.noaa.gov/gis/) and formats a placefile for GRLevelX software
 to display either outlines of the areas with risk hazards.
 A mouse-over the line will popup a text tooltip with details about the risk area.
 
