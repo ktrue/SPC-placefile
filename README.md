@@ -179,7 +179,14 @@ End:
 ```
 
 ## Display samples with GRLevel3
+### Day 1 Sample
+![SPC-sample-day1](https://github.com/ktrue/SPC-placefile/assets/17507343/c5ffdc58-dcc3-4c86-8b6f-57f296d2c9c9)
 
+### Day 2 Sample
+![SPC-sample-day2](https://github.com/ktrue/SPC-placefile/assets/17507343/768b95ab-c21b-408b-b1b9-5ce67d8dabda)
+
+### Day 3 Sample
+![SPC-sample-day3](https://github.com/ktrue/SPC-placefile/assets/17507343/75b807e1-801a-499c-afdb-fd1ed1b1373b)
 
 ## Acknowledgements
 
