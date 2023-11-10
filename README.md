@@ -195,5 +195,4 @@ End:
 
 Special thanks to Mike Davis, W1ARN of the National Weather Service, Nashville TN office
 for his inspiration/testing/feedback during development.
-Also thanks to [Gaspare Sganga](https://gasparesganga.com/labs/php-shapefile/) for his excellent *php-shapefile* class scripts which allowed this script set to be built.   
 
