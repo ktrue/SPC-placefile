@@ -11,8 +11,9 @@ ini_set('display_errors','1');
 * 
 */
 # Version 1.00 - 10-Nov-2023 - initial release
+# Version 1.01 - 11-Nov-2023 - improved mouse-over popup display
 
-$Version = "SPC-placefile.php - V1.00 - 10-Nov-2023 - saratoga-weather.org";
+$Version = "SPC-placefile.php - V1.01 - 11-Nov-2023 - saratoga-weather.org";
 # -----------------------------------------------
 #  Settings
 $timeFormat = "d-M-Y g:ia T";           # display format for times
@@ -20,7 +21,7 @@ $cacheFilenameTemplate = 'SPC-%s.json'; # store json cache file
 $cacheTimeMax  = 480;                   # number of seconds cache is 'fresh'
 $doLogging = true;
 $doDebug = false; # =true; turn on additional display, may break placefile for GRLevelX
-$TZ = "America/Los_Angeles";
+$TZ = "America/Chicago";
 $SPCcolors= false;  # =true, use JSON 'stroke' color; =false, use built-in colors
 
 $latitude = 37.155;
@@ -265,24 +266,18 @@ function decodeOutlook($feature,$DayLegend) {
 #    $label2 = $feature['properties']['LABEL2'];
 #    $colors = $feature['properties']['LABEL2'];
 	$valid = $feature['properties']['VALID'];
+	$pValid = format_date($feature['properties']['VALID']);
 	$valid = substr($valid, 8);
-	/*
-	$colors = str_replace('General Thunderstorms Risk', "Color: 183 233 193", $colors);
-	$colors = str_replace('Marginal Risk', "Color: 0 176 80", $colors);
-	$colors = str_replace('Slight Risk', "Color: 255 255 0", $colors);
-	$colors = str_replace('Enhanced Risk', "Color: 255 163 41", $colors);
-	$colors = str_replace('Moderate Risk', "Color: 255 0 0", $colors);
-	$colors = str_replace('High Risk', "Color: 255 0 255", $colors);	
-	$label2 = str_replace('General Thunderstorms Risk', 'Line: 2, 0, "Day 1 General Thunderstorm Risk - ', $label2);
-	$label2 = str_replace('Marginal Risk', 'Line: 4, 0, "Day 1 Marginal Risk - ', $label2);
-	$label2 = str_replace('Slight Risk', 'Line: 5, 0, "Day 1 Slight Risk - ', $label2);
-	$label2 = str_replace('Enhanced Risk', 'Line: 6, 0, "Day 1 Enhanced Risk - ', $label2);
-	$label2 = str_replace('Moderate Risk', 'Line: 7, 0, "Day 1 Moderate Risk - ', $label2);
-	$label2 = str_replace('High Risk', 'Line: 8, 0, "Day 1 High Risk - ', $label2);	
-*/
-    $theLine = "; type=".$feature['geometry']['type']."\n";
-    $theLine .= $color. "\n";
-    $theLine .= $line.' "SPC '.$DayLegend.' Outlook - '.$title.' '.$valid. "\"\n";
+	$pExpires = format_date($feature['properties']['EXPIRE']);
+	$pIssued = format_date($feature['properties']['ISSUE']);
+
+  $theLine = "; type=".$feature['geometry']['type']."\n";
+  $theLine .= $color. "\n";
+  $theLine .= $line.' "SPC '.$DayLegend.' Convective Outlook:\n'.$title.'\n';
+	$theLine .= '-----------------------------------------\n';
+	$theLine .= "Issued:  $pIssued".'\n';
+	$theLine .= "Valid:   $pValid".'\n';
+	$theLine .= "Expires: $pExpires".'"'."\n";
 /*  $feature['geometry']['coordinates'] looks like (for nolyy polygon:
 array (
   0 => 
@@ -364,4 +359,12 @@ function convert_hex_color($CSScolor) {
 	$G = hexdec(substr($CSScolor,3,2));
 	$B = hexdec(substr($CSScolor,5,2));
 	return("Color: $R $G $B");
+}
+
+# -----------------------------------------------------
+
+function format_date($indate) {
+	# input date format '202311111609'
+	$t = substr($indate,0,8)."T".substr($indate,8,4)."00+00:00";
+	return(date("D g:ia T M j Y",strtotime($t)));
 }
