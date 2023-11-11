@@ -3,7 +3,7 @@
 ## Purpose:
 
 This script set gets JSON outlook data from the [SPC GIS Convective Outlooks](https://www.spc.noaa.gov/gis/) and formats a placefile for GRLevelX software
-to display either outlines of the areas with risk hazards.
+to display outlines of the areas with risk hazards.
 A mouse-over the line will popup a text tooltip with details about the risk area.
 
 The *SPC-placefile.php* script is to be accessed by including the website URL in the GRLevelX placefile manager window.
