@@ -13,8 +13,9 @@ ini_set('display_errors','1');
 # Version 1.00 - 10-Nov-2023 - initial release
 # Version 1.01 - 11-Nov-2023 - improved mouse-over popup display
 # Version 1.02 - 16-Nov-2023 - added Text: displays on SPC lines for better clairity
+# Version 1.03 - 16-Nov-2023 - added mouse-over tooltip for legend words on lines
 
-$Version = "SPC-placefile.php - V1.02 - 16-Nov-2023 - saratoga-weather.org";
+$Version = "SPC-placefile.php - V1.03 - 16-Nov-2023 - saratoga-weather.org";
 # -----------------------------------------------
 #  Settings
 $timeFormat = "d-M-Y g:ia T";           # display format for times
@@ -274,13 +275,15 @@ function decodeOutlook($feature,$DayLegend) {
 	$pExpires = format_date($feature['properties']['EXPIRE']);
 	$pIssued = format_date($feature['properties']['ISSUE']);
 
+	$popup  = '"SPC '.$DayLegend.' Convective Outlook:\n'.$title.'\n';
+	$popup .= '-----------------------------------------\n';
+	$popup .= "Issued:  $pIssued".'\n';
+	$popup .= "Valid:   $pValid".'\n';
+	$popup .= "Expires: $pExpires".'"'."\n";
+
   $theLine = "; type=".$feature['geometry']['type']."\n";
   $theLine .= $color. "\n";
-  $theLine .= $line.' "SPC '.$DayLegend.' Convective Outlook:\n'.$title.'\n';
-	$theLine .= '-----------------------------------------\n';
-	$theLine .= "Issued:  $pIssued".'\n';
-	$theLine .= "Valid:   $pValid".'\n';
-	$theLine .= "Expires: $pExpires".'"'."\n";
+  $theLine .= $line.' '.$popup;
 /*  $feature['geometry']['coordinates'] looks like (for nolyy polygon:
 array (
   0 => 
@@ -332,7 +335,7 @@ array (
    foreach($feature['geometry']['coordinates'] as $i => $C) {
      foreach ($C as $SET) {
         $out .= $SET[1] .",".$SET[0]. "\n";
-				$txtMarker .= "Text: ".$SET[1] . "," . $SET[0].',1,"'.$txtCode.'"'."\n";
+				$txtMarker .= "Text: ".$SET[1] . "," . $SET[0].',1,"'.$txtCode.'",'.$popup;
      }
 	 }
    $out.= "End:"."\n\n"; # finish Line set
@@ -343,7 +346,7 @@ array (
 		 foreach ($R as $C) {
 			 foreach ($C as $SET) {
 					$out .= $SET[1] .",".$SET[0]. "\n";
-				  $txtMarker .= "Text: ".$SET[1] . "," . $SET[0].',1,"'.$txtCode.'"'."\n";
+				  $txtMarker .= "Text: ".$SET[1] . "," . $SET[0].',1,"'.$txtCode.'",'.$popup;
 			 }
 		 }
 	   $out.= "End:"."\n\n"; # finish Line set
