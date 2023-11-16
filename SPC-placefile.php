@@ -12,8 +12,9 @@ ini_set('display_errors','1');
 */
 # Version 1.00 - 10-Nov-2023 - initial release
 # Version 1.01 - 11-Nov-2023 - improved mouse-over popup display
+# Version 1.02 - 16-Nov-2023 - added Text: displays on SPC lines for better clairity
 
-$Version = "SPC-placefile.php - V1.01 - 11-Nov-2023 - saratoga-weather.org";
+$Version = "SPC-placefile.php - V1.02 - 16-Nov-2023 - saratoga-weather.org";
 # -----------------------------------------------
 #  Settings
 $timeFormat = "d-M-Y g:ia T";           # display format for times
@@ -257,7 +258,9 @@ function decodeOutlook($feature,$DayLegend) {
 	if($doDebug) {$out .= "\n; decodeOutlook entered.\n"; }
 	
 	$tCode = !empty($feature['properties']['LABEL'])?$feature['properties']['LABEL']:'unk';
-	list($title,$color,$line) = explode('|',$LEGEND[$tCode]);
+	list($title,$color,$line) = isset($LEGEND[$tCode])?
+	  explode('|',$LEGEND[$tCode]):
+		explode('|',"Severe Weather Outlook ".($tCode*100)."%|Color: 247 246 144|Line: 4, 0,");
 	
 	$color = ($SPCcolors and isset($feature['properties']['stroke']))?
 	    convert_hex_color($feature['properties']['stroke']):$color;
@@ -320,11 +323,16 @@ array (
 	 return($out);
  }
    #print "; coordinates\n; ----------\n".var_export($feature['geometry']['coordinates'],true)."\n; ----------\n";
+# Text: lat, lon, fontNumber, "string", "hover"
+ $txtMarker = '';
+ $txtMarker .= "$color\n";
+ $txtCode = is_numeric($tCode)?(string)($tCode*100)."%":$tCode;
  if($feature['geometry']['type'] == "Polygon") { # process simple polygon
    $out .= $theLine; # insert color/line info
    foreach($feature['geometry']['coordinates'] as $i => $C) {
      foreach ($C as $SET) {
         $out .= $SET[1] .",".$SET[0]. "\n";
+				$txtMarker .= "Text: ".$SET[1] . "," . $SET[0].',1,"'.$txtCode.'"'."\n";
      }
 	 }
    $out.= "End:"."\n\n"; # finish Line set
@@ -335,6 +343,7 @@ array (
 		 foreach ($R as $C) {
 			 foreach ($C as $SET) {
 					$out .= $SET[1] .",".$SET[0]. "\n";
+				  $txtMarker .= "Text: ".$SET[1] . "," . $SET[0].',1,"'.$txtCode.'"'."\n";
 			 }
 		 }
 	   $out.= "End:"."\n\n"; # finish Line set
@@ -342,6 +351,9 @@ array (
    // Convert coordinates array to string and remove brackets
 
   }
+ $out .= "; text markers\n";
+ $out .= $txtMarker;
+ $out .= "; end text markers\n";
 	if($doDebug) {$out .= "\n; decodeOutlook returned.\n"; }
 
 return( $out );
