@@ -180,16 +180,20 @@ End:
 
 ## Display samples with GRLevel3
 ### Day 1 Sample
-![SPC-sample-day1](https://github.com/ktrue/SPC-placefile/assets/17507343/c5ffdc58-dcc3-4c86-8b6f-57f296d2c9c9)
 
-### Day 2 Sample
-![SPC-sample-day2](https://github.com/ktrue/SPC-placefile/assets/17507343/768b95ab-c21b-408b-b1b9-5ce67d8dabda)
+![SPC-sample-day1](https://github.com/ktrue/SPC-placefile/assets/17507343/1058a20e-f294-46a2-a4c1-8e328c3757a9)
 
-### Day 3 Sample
-![SPC-sample-day3](https://github.com/ktrue/SPC-placefile/assets/17507343/75b807e1-801a-499c-afdb-fd1ed1b1373b)
+### Day 4 Sample
+
+![SPC-sample-day2](https://github.com/ktrue/SPC-placefile/assets/17507343/ae442841-bd93-487f-95ae-ec45b2771b87)
+
+### Day 5 Sample
+
+![SPC-sample-day3](https://github.com/ktrue/SPC-placefile/assets/17507343/a1dc20ff-61c9-4721-8729-762621d0453a)
 
 ### Sample with all risks displayed
-![SPC-sample-test](https://github.com/ktrue/SPC-placefile/assets/17507343/5e781238-6d5f-488e-8ade-ec309a2b0727)
+
+![SPC-sample-test](https://github.com/ktrue/SPC-placefile/assets/17507343/70a88adf-2045-45a9-8bc0-f7eff46b3b8f)
 
 ## Acknowledgements
 
