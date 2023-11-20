@@ -14,8 +14,9 @@ ini_set('display_errors','1');
 # Version 1.01 - 11-Nov-2023 - improved mouse-over popup display
 # Version 1.02 - 16-Nov-2023 - added Text: displays on SPC lines for better clairity
 # Version 1.03 - 16-Nov-2023 - added mouse-over tooltip for legend words on lines
+# Version 1.04 - 20-Nov-2023 - fixed mouse-over for MGNL display
 
-$Version = "SPC-placefile.php - V1.03 - 16-Nov-2023 - saratoga-weather.org";
+$Version = "SPC-placefile.php - V1.04 - 20-Nov-2023 - saratoga-weather.org";
 # -----------------------------------------------
 #  Settings
 $timeFormat = "d-M-Y g:ia T";           # display format for times
@@ -65,7 +66,7 @@ $URLS = array(
 $LEGEND = array(
 # "LEGEND" -> Longname,Color,Line 
  "TSTM" => "General Thunderstorm Risk|Color: 183 233 193|Line: 4, 0,",
- "MRGL" => "Marginal Risk|Color: 0 176 80|Line: 4, 0",
+ "MRGL" => "Marginal Risk|Color: 0 176 80|Line: 4, 0,",
  "SLGT" => "Slight Risk|Color: 255 255 0|Line: 5, 0,",
  "ENH"  => "Enhanced Risk|Color: 255 163 41|Line: 6, 0,",
  "MDT"  => "Moderate Risk|Color: 255 0 0|Line: 7, 0,",
@@ -263,8 +264,8 @@ function decodeOutlook($feature,$DayLegend) {
 	  explode('|',$LEGEND[$tCode]):
 		explode('|',"Severe Weather Outlook ".($tCode*100)."%|Color: 247 246 144|Line: 4, 0,");
 	
-	$color = ($SPCcolors and isset($feature['properties']['stroke']))?
-	    convert_hex_color($feature['properties']['stroke']):$color;
+	$color = ($SPCcolors and isset($feature['properties']['fill']))?
+	    convert_hex_color($feature['properties']['fill']):$color;
 
     // Get the LABEL2 value
 #    $label2 = $feature['properties']['LABEL2'];
@@ -327,8 +328,8 @@ array (
  }
    #print "; coordinates\n; ----------\n".var_export($feature['geometry']['coordinates'],true)."\n; ----------\n";
 # Text: lat, lon, fontNumber, "string", "hover"
- $txtMarker = '';
- $txtMarker .= "$color\n";
+ $txtMarker = "Color: 255 255 255\n";
+ #$txtMarker = "$color\n";
  $txtCode = is_numeric($tCode)?(string)($tCode*100)."%":$tCode;
  if($feature['geometry']['type'] == "Polygon") { # process simple polygon
    $out .= $theLine; # insert color/line info
@@ -356,7 +357,7 @@ array (
   }
  $out .= "; text markers\n";
  $out .= $txtMarker;
- $out .= "; end text markers\n";
+ $out .= "; end text markers $txtCode\n\n";
 	if($doDebug) {$out .= "\n; decodeOutlook returned.\n"; }
 
 return( $out );
