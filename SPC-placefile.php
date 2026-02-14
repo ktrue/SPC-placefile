@@ -15,8 +15,9 @@ ini_set('display_errors','1');
 # Version 1.02 - 16-Nov-2023 - added Text: displays on SPC lines for better clairity
 # Version 1.03 - 16-Nov-2023 - added mouse-over tooltip for legend words on lines
 # Version 1.04 - 20-Nov-2023 - fixed mouse-over for MGNL display
+# Version 1.05 - 14-Feb-2026 - fixed fatal errata when no forecasted events.
 
-$Version = "SPC-placefile.php - V1.04 - 20-Nov-2023 - saratoga-weather.org";
+$Version = "SPC-placefile.php - V1.05 - 14-Feb-2026 - saratoga-weather.org";
 # -----------------------------------------------
 #  Settings
 $timeFormat = "d-M-Y g:ia T";           # display format for times
@@ -262,7 +263,7 @@ function decodeOutlook($feature,$DayLegend) {
 	$tCode = !empty($feature['properties']['LABEL'])?$feature['properties']['LABEL']:'unk';
 	list($title,$color,$line) = isset($LEGEND[$tCode])?
 	  explode('|',$LEGEND[$tCode]):
-		explode('|',"Severe Weather Outlook ".($tCode*100)."%|Color: 247 246 144|Line: 4, 0,");
+		explode('|',$feature['properties']['LABEL']."|Color: 247 246 144|Line: 4, 0,");
 	
 	$color = ($SPCcolors and isset($feature['properties']['fill']))?
 	    convert_hex_color($feature['properties']['fill']):$color;
